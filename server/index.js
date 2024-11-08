@@ -9,11 +9,14 @@ const logRoutes = (req, res, next) => {
     next(); // Passes the request to the next middleware/controller
 };
 
-
 app.use(logRoutes);
-app.use(express.static(path.join(__dirname, '../dist')));
+
+// Serve static files from the 'front-end/dist' folder
+app.use(express.static(path.join(__dirname, '../front-end/dist')));
+
+// Fallback route to serve index.html for all other routes (SPA)
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+    res.sendFile(path.join(__dirname, '../front-end/dist', 'index.html')); // Corrected to match the path
 });
 
 // Set the port number
